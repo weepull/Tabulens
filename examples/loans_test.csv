@@ -1,0 +1,105 @@
+application_id,age,income,city,employment_type,country,risk_score,defaulted
+T2000,28,34321,Bengaluru,student,India,0.534,0
+T2001,23,65321,pune,Salaried,India,0.209,0
+T2002,41,182106,Bengaluru,self-employed,India,0.585,0
+T2003,34,158421,mumbai,salaried,India,0.077,0
+T2004,32,63949,mumbai,Salaried,India,0.546,0
+T2005,55,187753,pune,Self-Employed,India,0.121,0
+T2006,35,124737,Delhi,student,India,0.634,0
+T2007,56,120837,mumbai,Self-Employed,India,0.007,0
+T2008,40,39286,Delhi,salaried,India,0.638,0
+T2009,27,102276,Delhi,student,India,0.033,0
+T2010,27,187366,MUMBAI ,Self-Employed,India,0.374,0
+T2011,25,187577,MUMBAI ,self-employed,India,0.852,1
+T2012,49,46102,Delhi,self-employed,India,0.727,1
+T2013,23,161601,pune,Salaried,India,0.798,1
+T2014,30,49660,Mumbai,student,India,0.547,0
+T2015,40,46903,Pune,salaried,India,0.729,1
+T2016,27,68228,Delhi,self-employed,India,0.225,0
+T2017,46,65168,pune,salaried,India,0.344,0
+T2018,42,131235,mumbai,Self-Employed,India,0.454,0
+T2019,54,135624,Pune,salaried,India,0.24,0
+T2020,39,79677,Delhi,Salaried,India,0.452,0
+T2021,42,68845,mumbai,self-employed,India,0.079,0
+T2022,49,85659,Bengaluru,Salaried,India,0.845,1
+T2023,41,24078,Mumbai,salaried,India,0.245,0
+T2024,51,79987,Bengaluru,Self-Employed,India,0.538,0
+T2025,23,154326,Pune,salaried,India,0.81,1
+T2026,39,147216,Mumbai,salaried,India,0.403,0
+T2027,43,27213,Bengaluru,student,India,0.593,0
+T2028,31,98097,Delhi,Self-Employed,India,0.325,0
+T2029,25,52298,Mumbai,student,India,0.107,0
+T2030,35,158227,pune,self-employed,India,0.447,0
+T2031,30,48364,MUMBAI ,student,India,0.362,0
+T2032,39,55077,Delhi,salaried,India,0.045,0
+T2033,51,178449,Bengaluru,Self-Employed,India,0.324,0
+T2034,55,149756,Mumbai,Salaried,India,0.774,1
+T2035,40,147249,Mumbai,salaried,India,0.464,0
+T2036,57,141012,MUMBAI ,student,India,0.784,1
+T2037,28,166361,Bengaluru,salaried,India,0.739,1
+T2038,60,93507,mumbai,salaried,India,0.747,1
+T2039,39,168775,MUMBAI ,Salaried,India,0.677,0
+T2040,34,66357,Pune,student,India,0.995,1
+T2041,29,186366,mumbai,Salaried,India,0.496,0
+T2042,31,87723,Bengaluru,student,India,0.049,0
+T2043,49,134210,Mumbai,student,India,0.431,0
+T2044,40,93087,mumbai,Self-Employed,India,0.58,0
+T2045,55,24415,Delhi,student,India,0.322,0
+T2046,55,124898,Pune,salaried,India,0.724,1
+T2047,55,81274,Bengaluru,student,India,0.936,1
+T2048,54,135935,MUMBAI ,Self-Employed,India,0.304,0
+T2049,35,120039,pune,student,India,0.21,0
+T2050,46,74130,Pune,salaried,India,0.406,0
+T2051,31,64723,pune,self-employed,India,0.478,0
+T2052,39,109044,Pune,salaried,India,0.558,0
+T2053,55,167446,pune,self-employed,India,0.528,0
+T2054,57,195899,Pune,Self-Employed,India,0.87,1
+T2055,23,173980,Mumbai,Self-Employed,India,0.945,1
+T2056,28,58341,pune,salaried,India,0.738,1
+T2057,43,108827,Delhi,Self-Employed,India,0.248,0
+T2058,23,32115,Mumbai,student,India,0.302,0
+T2059,35,109381,mumbai,Salaried,India,0.945,1
+T2060,22,104947,mumbai,self-employed,India,0.751,1
+T2061,27,113934,Pune,self-employed,India,0.259,0
+T2062,31,39217,pune,student,India,0.922,1
+T2063,51,63601,mumbai,Self-Employed,India,0.051,0
+T2064,57,89935,MUMBAI ,salaried,India,0.418,0
+T2065,43,144988,pune,self-employed,India,0.964,1
+T2066,53,117165,Mumbai,student,India,0.86,1
+T2067,25,199811,Bengaluru,Self-Employed,India,0.039,0
+T2068,36,115744,pune,self-employed,India,0.79,1
+T2069,45,110982,Pune,student,India,0.604,0
+T2070,32,32113,MUMBAI ,Self-Employed,India,0.412,0
+T2071,36,23139,mumbai,Self-Employed,India,0.179,0
+T2072,41,164574,pune,student,India,0.634,0
+T2073,22,40441,Bengaluru,Salaried,India,0.032,0
+T2074,59,115593,MUMBAI ,self-employed,India,0.079,0
+T2075,33,66998,Delhi,salaried,India,0.903,1
+T2076,61,79056,mumbai,Self-Employed,India,0.624,0
+T2077,25,106701,Mumbai,Self-Employed,India,0.869,1
+T2078,37,128009,MUMBAI ,Self-Employed,India,0.027,0
+T2079,51,80831,Delhi,salaried,India,0.443,0
+T2080,60,155526,Bengaluru,Self-Employed,India,0.972,1
+T2081,29,24772,Bengaluru,Self-Employed,India,0.256,0
+T2082,46,159266,mumbai,student,India,0.85,1
+T2083,57,190854,Pune,salaried,India,0.253,0
+T2084,30,125212,Mumbai,salaried,India,0.553,0
+T2085,58,83842,mumbai,Self-Employed,India,0.662,0
+T2086,34,104336,MUMBAI ,salaried,India,0.788,1
+T2087,38,30344,Delhi,self-employed,India,0.304,0
+T2088,47,103634,Mumbai,self-employed,India,0.752,1
+T2089,24,184492,pune,Salaried,India,0.433,0
+L1000,23,186857,Delhi,Salaried,India,0.239,0
+L1007,32,,Bengaluru,self-employed,India,0.996,1
+L1014,37,38090,Pune,Self-Employed,India,0.269,0
+L1021,49,30499,mumbai,self-employed,India,0.507,0
+L1028,35,,Mumbai,self-employed,India,0.136,0
+L1035,56,115057,MUMBAI ,Self-Employed,India,0.001,0
+L1042,34,170761,pune,salaried,India,0.416,0
+L1049,59,,Delhi,salaried,India,0.521,0
+L1056,29,82017,Mumbai,Self-Employed,India,0.114,0
+L1063,29,188405,mumbai,Self-Employed,India,0.739,1
+L1070,50,52489,Delhi,Salaried,India,0.595,0
+L1077,22,116723,mumbai,salaried,India,0.273,0
+L1084,59,119793,Bengaluru,self-employed,India,0.131,0
+L1091,47,37823,MUMBAI ,student,India,0.191,0
