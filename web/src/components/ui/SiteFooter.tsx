@@ -27,9 +27,9 @@ export function SiteFooter() {
               </li>
               {NAV_LINKS.slice(0, 2).map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className={LINK}>
+                  <a href={l.href} className={LINK}>
                     {l.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -39,9 +39,9 @@ export function SiteFooter() {
             <ul className="mt-4 space-y-2.5">
               {NAV_LINKS.slice(2).map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className={LINK}>
+                  <a href={l.href} className={LINK}>
                     {l.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

@@ -72,9 +72,9 @@ export function SiteNav() {
             <ul className="flex items-center gap-1">
               {NAV_LINKS.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className={LINK}>
+                  <a href={l.href} className={LINK}>
                     {l.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -112,13 +112,12 @@ export function SiteNav() {
           <ul className="flex flex-col">
             {NAV_LINKS.map((l) => (
               <li key={l.href}>
-                <Link
-                  href={l.href}
+                <a href={l.href}
                   onClick={() => setOpen(false)}
                   className="block rounded-xl px-3 py-3 text-base text-foreground hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-accent"
                 >
                   {l.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
