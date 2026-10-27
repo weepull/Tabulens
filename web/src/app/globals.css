@@ -1,0 +1,321 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Components use the Tailwind names on the right
+ * (bg-surface, text-muted, border-line, text-sev-high, bg-sev-high-soft, ...)
+ * and never raw hex. See DESIGN.md.
+ *
+ * The site is dark-only and monochrome. Severity keeps a quiet, desaturated
+ * tint so it stays distinguishable, but it is always also written as text.
+ */
+:root {
+  /* Native scrollbars, selects and form controls render dark too. */
+  color-scheme: dark;
+  --background: #0a0a0a;
+  --surface: #121212;
+  --surface-2: #1a1a1a;
+  --line: #2a2a2a;
+  --foreground: #f5f5f5;
+  --muted: #a3a3a3; /* 7:1 on surface-2 */
+  --subtle: #8c8c8c; /* >= 4.6:1 on every surface up to #1f1f1f; use for small print */
+  --accent: #ededed;
+  --accent-soft: #262626;
+
+  --sev-high: #e6a59c;
+  --sev-high-soft: #2a1c1a;
+  --sev-medium: #d9c19c;
+  --sev-medium-soft: #28221a;
+  --sev-low: #a9bfd0;
+  --sev-low-soft: #1a2027;
+  --sev-info: #b8b8b8;
+  --sev-info-soft: #1f1f1f;
+
+  --ok: #a9d3b9;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-sev-high: var(--sev-high);
+  --color-sev-high-soft: var(--sev-high-soft);
+  --color-sev-medium: var(--sev-medium);
+  --color-sev-medium-soft: var(--sev-medium-soft);
+  --color-sev-low: var(--sev-low);
+  --color-sev-low-soft: var(--sev-low-soft);
+  --color-sev-info: var(--sev-info);
+  --color-sev-info-soft: var(--sev-info-soft);
+  --color-ok: var(--ok);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Animations: use as animate-float, animate-twinkle, ... (transform/opacity only). */
+@theme {
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-twinkle: twinkle 3.6s ease-in-out infinite;
+  --animate-spin-slow: spin 24s linear infinite;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -10px, 0); }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(0.86); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translate3d(0, 12px, 0); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes marquee {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+}
+
+html {
+  /* Sections are targets of the sticky nav; keep their headings out from under it. */
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  /* clip, not hidden: decorative glows may bleed past the edge, and hidden would break position: sticky. */
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+@layer components {
+  /* Put on a section's backdrop layer so its grid, glows and vignette fade into the plain page at the
+     top and bottom edges; without it each section ends in a visible seam. -b fades the bottom only. */
+  .section-fade {
+    mask-image: linear-gradient(to bottom, transparent, #000 160px, #000 calc(100% - 160px), transparent);
+  }
+  .section-fade-b {
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 200px), transparent);
+  }
+
+  /* Faint 64px grid that fades out towards the edges. Put on an absolutely positioned, aria-hidden layer. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: center top;
+    mask-image: radial-gradient(ellipse 75% 65% at 50% 30%, #000 30%, transparent 100%);
+  }
+
+  /* Film grain. GrainOverlay uses this fixed over the page; also fine on a single card. */
+  .grain {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 180px 180px;
+    opacity: 0.05;
+  }
+
+  /* Darkens the edges of whatever it covers. */
+  .vignette {
+    background: radial-gradient(ellipse 80% 70% at 50% 40%, transparent 40%, rgb(0 0 0 / 0.75) 100%);
+  }
+
+  /* Soft white glow; size and place it with Tailwind (e.g. absolute -top-40 left-1/2 h-[480px] w-[720px]). */
+  .light-leak {
+    background: radial-gradient(closest-side, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.04) 55%, transparent);
+  }
+
+  /* Frosted glass surface with a hairline border and an inner top highlight. */
+  .glass {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.02));
+    border: 1px solid rgb(255 255 255 / 0.08);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      0 20px 40px -24px rgb(0 0 0 / 0.8);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+  }
+
+  /* Opaque variant for places where backdrop blur is wasteful (long lists, the analyzer). */
+  .glass-solid {
+    background: linear-gradient(180deg, #161616, #101010);
+    border: 1px solid rgb(255 255 255 / 0.08);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  /* Silver gradient text for big headings. Darkest stop still >= 4.5:1 on the background. */
+  .chrome-text {
+    background-image: linear-gradient(180deg, #ffffff 0%, #e6e6e6 38%, #9a9a9a 72%, #d4d4d4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Descenders (g, y) get clipped without a little room. */
+    padding-bottom: 0.08em;
+  }
+
+  /* Hollow chrome outline text (footer wordmark). */
+  .chrome-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(255 255 255 / 0.28);
+    background-image: linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0) 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /*
+   * Gradient hairline border drawn by ::before, plus a brighter arc that
+   * follows --mx/--my (set by GlassCard). Needs position: relative and a
+   * border-radius on the element. Uses ::before; .spotlight uses ::after.
+   */
+  .chrome-border {
+    position: relative;
+  }
+  .chrome-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background:
+      radial-gradient(260px circle at var(--mx, -100%) var(--my, -100%), rgb(255 255 255 / 0.55), transparent 60%),
+      linear-gradient(160deg, rgb(255 255 255 / 0.4), rgb(255 255 255 / 0.07) 35%, rgb(255 255 255 / 0.03) 65%, rgb(255 255 255 / 0.18));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Cursor-follow light inside a card. Reads --mx/--my; shows on hover or when data-active is set. */
+  .spotlight {
+    position: relative;
+  }
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.08), transparent 45%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .spotlight:hover::after,
+  .spotlight[data-active]::after {
+    opacity: 1;
+  }
+
+  /* 3D tilt driven by --rx/--ry (set by GlassCard tilt). */
+  .tilt {
+    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
+  }
+  .tilt[data-active] {
+    transition-duration: 0.12s;
+  }
+
+  /* Brushed metal: fine horizontal streaks over a steel gradient. Small areas only (badges, chips). */
+  .brushed {
+    background:
+      repeating-linear-gradient(0deg, rgb(255 255 255 / 0.03) 0 1px, transparent 1px 3px),
+      linear-gradient(135deg, #3a3a3a, #1a1a1a 45%, #2e2e2e 70%, #151515);
+  }
+
+  /* Inner specular highlight along the top edge. */
+  .specular {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.14),
+      inset 0 -1px 0 rgb(0 0 0 / 0.4);
+  }
+
+  /* Buttons (used by <Button>). */
+  .btn-primary {
+    background: linear-gradient(180deg, #ffffff, #dcdcdc);
+    color: #0a0a0a;
+    box-shadow:
+      inset 0 1px 0 #ffffff,
+      inset 0 -1px 0 rgb(0 0 0 / 0.18),
+      0 10px 30px -10px rgb(255 255 255 / 0.35);
+  }
+  .btn-glass {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.09), rgb(255 255 255 / 0.03));
+    color: var(--foreground);
+    border: 1px solid rgb(255 255 255 / 0.12);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .btn-glass:hover {
+    border-color: rgb(255 255 255 / 0.22);
+  }
+  /* A diagonal glint that sweeps across on hover. */
+  .btn-sheen {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.45) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .group:hover .btn-sheen {
+    transform: translateX(120%);
+  }
+
+  /* Fade/rise on entering the viewport (used by <Reveal>). */
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-y, 18px), 0);
+    transition:
+      opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0ms),
+      transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) var(--reveal-delay, 0ms);
+  }
+  .reveal[data-shown] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Reduced motion: everything is static and fully visible. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .tilt {
+    transform: none;
+  }
+  .btn-sheen {
+    display: none;
+  }
+}
