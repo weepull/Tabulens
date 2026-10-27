@@ -23,7 +23,10 @@ export function parseCsv(buffer, { filename = 'upload.csv' } = {}) {
     throw err;
   }
 
-  const dupeHeaders = columns.filter((c, i) => columns.indexOf(c) !== i);
+  // Papa renames repeated headers ('a,a' -> 'a', 'a_1') before meta.fields is
+  // built, so duplicates have to be read from its rename map, not from columns.
+  const renamedHeaders = { ...(out.meta.renamedHeaders || {}) };
+  const dupeHeaders = [...new Set(Object.values(renamedHeaders))];
   const rows = out.data.filter((r) => r && typeof r === 'object');
 
   // Papa reports ragged rows here; worth surfacing rather than silently padding.
@@ -35,6 +38,6 @@ export function parseCsv(buffer, { filename = 'upload.csv' } = {}) {
     filename,
     columns,
     rows,
-    parseIssues: { ragged: ragged.slice(0, 50), raggedCount: ragged.length, dupeHeaders },
+    parseIssues: { ragged: ragged.slice(0, 50), raggedCount: ragged.length, dupeHeaders, renamedHeaders },
   };
 }

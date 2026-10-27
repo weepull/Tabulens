@@ -13,14 +13,15 @@ export function run({ rows, profile, finding }) {
     const conf = col.confidence; // share of non-missing values matching the dominant type
     if (conf < T.mixedTypes.minDominant || conf > T.mixedTypes.maxDominant) continue;
 
-    // Collect the minority values so the user can see what actually broke.
+    // Every offending row goes in rowIndexes, so makeFinding's totalRows is the
+    // true count (it caps the list itself). Only the samples are capped here.
     const offenders = [];
     const rowIndexes = [];
-    for (let i = 0; i < rows.length && offenders.length < 50; i++) {
+    for (let i = 0; i < rows.length; i++) {
       const raw = rows[i][col.name];
       const kind = classify(raw);
       if (kind === 'missing' || kind === col.type) continue;
-      offenders.push({ row: i, value: String(raw), parsedAs: kind });
+      if (offenders.length < 50) offenders.push({ row: i, value: String(raw), parsedAs: kind });
       rowIndexes.push(i);
     }
     if (offenders.length === 0) continue;
@@ -39,7 +40,7 @@ export function run({ rows, profile, finding }) {
           `making the whole column object dtype, so arithmetic silently stops working or the whole ` +
           `column is read as text. Below ${pct(T.mixedTypes.minDominant)} we assume it is genuinely ` +
           `free text and stay quiet.`,
-        evidence: { dominantType: col.type, confidence: conf, offenders: offenders.length },
+        evidence: { dominantType: col.type, confidence: conf, offenders: rowIndexes.length },
         columns: [col.name],
         rowIndexes,
         examples: offenders.slice(0, 5),

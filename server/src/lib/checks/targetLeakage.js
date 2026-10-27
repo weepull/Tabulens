@@ -157,7 +157,8 @@ export function run({ rows, columns, profile, target, finding }) {
     }
 
     // Categorical branch.
-    const { purity, groups } = groupPurity(pairs);
+    // Group on the raw text: `x` is the numeric parse, null for every non-number.
+    const { purity, groups } = groupPurity(pairs.map((p) => ({ x: p.raw, y: p.y })));
     // A column with a distinct value per row reaches purity 1.0 for free. That
     // is an identifier, and id-like-columns already reports it.
     if (groups > pairs.length * T.leakage.maxCardinalityRatio) continue;
