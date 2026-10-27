@@ -32,6 +32,14 @@ function form(fields) {
 const analyze = (fields, headers = {}) =>
   fetch(`${base}/api/analyze`, { method: 'POST', body: form(fields), headers });
 
+test('GET / says the API is running and lists its endpoints', async () => {
+  const res = await fetch(`${base}/`);
+  assert.equal(res.status, 200);
+  const body = await res.json();
+  assert.equal(body.status, 'running');
+  assert.ok(body.endpoints.analyze);
+});
+
 test('GET /health reports the upload cap', async () => {
   const res = await fetch(`${base}/health`);
   assert.equal(res.status, 200);

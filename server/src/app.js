@@ -30,6 +30,13 @@ export function createApp({ allowedOrigins = process.env.ALLOWED_ORIGINS || 'htt
   // Render and Cloud Run both poll an endpoint to decide if the process is alive.
   app.get('/health', (_req, res) => res.json({ ok: true, maxBytes: MAX_BYTES }));
 
+  // Someone opening the API's address in a browser should see that it is up, not a 404.
+  app.get('/', (_req, res) => res.json({
+    name: 'Tabulens API',
+    status: 'running',
+    endpoints: { health: 'GET /health', analyze: 'POST /api/analyze (multipart: file, test?, target?)' },
+  }));
+
   app.use('/api', analyzeRouter);
 
   app.use((_req, res) => res.status(404).json({ error: 'Not found' }));
