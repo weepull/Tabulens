@@ -1,0 +1,19 @@
+# Render Blueprint for the API. In Render: New > Blueprint, pick this repo.
+# The website deploys separately on Vercel (root directory: web).
+services:
+  - type: web
+    name: tabulens-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # The Vercel site's exact origin, e.g. https://tabulens.vercel.app (comma-separate several).
+      # Asked for when the Blueprint is created; the browser blocks the site until it matches.
+      - key: ALLOWED_ORIGINS
+        sync: false
